@@ -1,12 +1,15 @@
-const bcrypt = require('bcrypt'); // Agregalo al principio de tu app.js
+
+const bcrypt = require('bcrypt');
 const session = require('express-session');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const db = require('./models/database');
+const helmet = require('helmet');
 
 
+app.use(helmet());
 app.use((req, res, next) => {
     console.log("📥 Request recibida:", req.method, req.url);
     next();
@@ -108,6 +111,11 @@ app.post('/login', (req, res) => {
         });
     });
 
+    app.get('/logout', (req, res) => {
+        req.session.destroy(() => {
+            res.redirect('/login');
+        });
+    });
 
 //----------------- provisorio
 app.get('/admin', (req, res) => {
@@ -128,11 +136,6 @@ app.get('/clientes', requireRole('admin'), (req, res) => {
 
 //-------------------------------
 
-    app.get('/dashboard', (req, res) => {
-        if (!req.session.userId) return res.redirect('/');
-    
-        res.render('dashboard', { usuario: req.session.usuario });
-    });
 
     // MIDDLEWARE
     function requireRole(role) {
@@ -146,6 +149,15 @@ app.get('/clientes', requireRole('admin'), (req, res) => {
             next();
         }
     }
+
+    function isAuthenticated(req, res, next) {
+        if (req.session.userId) return next();
+        return res.redirect('/login');
+    }
+
+    app.get('/admin', isAuthenticated, (req, res) => {
+        res.send('Página de Administración (en construcción)');
+    });
 
 
 // Ruta para añadir producto
@@ -179,11 +191,17 @@ app.post('/add-product', requireRole('admin'), (req, res) => {
 
 // Ruta de Dashboard
 app.get('/dashboard', (req, res) => {
+    if (!req.session.userId) return res.redirect('/login');
+
     db.all('SELECT * FROM productos', [], (err, rows) => {
         if (err) {
-            return console.log(err.message);
+            console.log(err.message);
+            return res.send('Error al cargar productos');
         }
-        res.render('dashboard', { products: rows });
+        res.render('dashboard', { 
+            usuario: req.session.usuario, 
+            products: rows 
+        });
     });
 });
 
