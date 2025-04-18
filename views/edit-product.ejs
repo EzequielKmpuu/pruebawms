@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Editar producto</h1>
+        <form action="/products/edit/<%= product.id %>" method="POST">
+            <input type="text" name="nombre" value="<%= product.nombre %>" placeholder="Nombre del producto" required>
+            <input type="text" name="descripcion" value="<%= product.descripcion %>" placeholder="Descripción corta">
+            <input type="number" name="codigo_barra" value="<%= product.codigo_barra %>" placeholder="Código de barras" required>
+            <input type="number" name="UxCaja" value="<%= product.UxCaja %>" placeholder="Unidades por caja" required>
+            <input type="text" name="Categoria" value="<%= product.Categoria %>" placeholder="Categoría" required>
+            <input type="text" name="sub_categoria" value="<%= product.sub_categoria %>" placeholder="Subcategoría">
+            <button type="submit">Actualizar</button>
+        </form>
+    </div>
+</body>
+</html>
+

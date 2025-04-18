@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .add-product {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .add-product:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+        .mensaje-exito {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #c3e6cb;
+} 
+    </style>
+    <title>Lista de productos</title>
+    <% if (req.query.actualizado) { %>
+        <div class="mensaje-exito">Producto actualizado correctamente.</div>
+    <% } %>
+</head>
+<body>
+    
+        <h1>Productos</h1>
+   
+    <a href="/products/new">Agregar producto</a>
+    
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Codigo de Barras</th>
+            <th>Unidad de medida</th>
+            <th>Categoria</th>
+            <th>Sub Categoria</th>
+            <th>Acciones</th>
+        </tr>
+        <% products.forEach(product => { %>
+            <tr>
+                <td><%= product.nombre %></td>
+                <td><%= product.descripcion %></td>
+                <td><%= product.codigo_barra %></td>
+                <td><%= product.UxCaja %></td>
+                <td><%= product.Categoria %></td>
+                <td><%= product.sub_categoria %></td>
+                <td>
+                    <a href="/products/edit/<%= product.id %>">Editar</a>
+                    <a href="/products/delete/<%= product.id %>">Eliminar</a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>
+
