@@ -169,11 +169,12 @@ app.post('/add-product', requireRole('admin'), (req, res) => {
     const { nombre, descripcion, codigo_barra, UxCaja, Categoria, sub_categoria } = req.body;
 
     //nombre TEXT NOT NULL,
- // descripcion TEXT NOT NULL,
-  //codigo_barra INTEGER UNIQUE NOT NULL,
-  //UxCaja INTEGER NOT NULL,
- // Categoria TEXT NOT NULL,
-//sub_categoria TEXT NOT NULL
+    // descripcion TEXT NOT NULL,
+    //codigo_barra INTEGER UNIQUE NOT NULL,
+    //UxCaja INTEGER NOT NULL,
+    // Categoria TEXT NOT NULL,
+    //sub_categoria TEXT NOT NULL
+    //stock INTEGER NOT NULL,
 
     // Insertar el nuevo producto en la base de datos
     db.run(

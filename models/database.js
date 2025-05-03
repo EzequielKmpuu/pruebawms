@@ -28,7 +28,8 @@ db.run(`
   codigo_barra INTEGER UNIQUE NOT NULL,
   UxCaja INTEGER NOT NULL,
   Categoria TEXT NOT NULL,
-  sub_categoria TEXT NOT NULL
+  sub_categoria TEXT NOT NULL,
+  stock INTEGER NOT NULL
     )
 `);
 
