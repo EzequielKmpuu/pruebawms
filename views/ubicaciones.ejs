@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Proveedores</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body class="p-4">
+  
+  <h3>Alta de Ubicaciones</h3>
+
+
+  <form action="/ubicaciones/agregar" method="POST" class="row g-3 my-3">
+    <div class="col-md-2">
+      <input name="ubicacion" placeholder="RK001 - RACKS / C001 - CALLES" class="form-control" style="width: 300px;" required maxlength="5">
+      <select name="tipo" class="form-select" style="width: 300px;" required>
+        <option value="">-- Seleccione un Tipo --</option>
+        <option value="Rack">Rack</option>
+        <option value="Calle">Calle</option>
+        <option value="Zona Temporal">Zona Temporal</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-success w-100">Agregar</button>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-sm">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th><th>Ubicaciones</th><th>Tipo</th><th>Capacidad MAX</th><th>Activa: 1 = Si // 0 = No</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% ubicacion.forEach(ub => { %>
+          <form action="/ubicaciones/editar/<%= ub.id %>" method="POST">
+            <TR>
+            <td><%= ub.id %></td>
+            <td><input name="ubicacion" value="<%= ub.ubicacion.toUpperCase() %>" class="form-control form-control-sm" readonly></td>
+            <td><input name="tipo" value="<%= ub.tipo.toUpperCase() %>" class="form-control form-control-sm" readonly></td>
+            <td><input name="capacidad_max" value="<%= ub.capacidad_max %>" class="form-control form-control-sm" required></td>
+            <td><input name="activa" value="<%= ub.activa %>" class="form-control form-control-sm" readonly></td>
+            <td class="d-flex gap-1">
+          <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+          
+          </td>
+        </tr>
+          </form>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <a href="/productos" class="btn btn-secondary mt-3">Productos</a>
+  <a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
+</body>
+</html>

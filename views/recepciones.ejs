@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recepciones</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body class="p-4">
+
+
+<h2>Recepciones Pendientes</h2><br>
+
+<a href="/facturas" class="btn btn-warning">Voler a Ingreso de Facturas</a><br>
+<br>
+<a href="/RecepcionesOK" class="btn btn-primary">Facturas Validadas</a><br>
+<br>
+<table class="table table-bordered table-sm">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th><th>Fecha</th><th>Recepción</th><th>Proveedor</th><th>Producto</th><th>Cant.</th><th>Estado::  Factura / Recepcion</th>
+      </tr>
+    </thead>
+    <tbody>
+  <% facturas.forEach(f => { %>
+    <tr>
+      <td><%= f.id %></td>
+      <td><%= f.fecha %></td>
+      <td><%= f.recepcion %></td>
+      <td><%= f.proveedor %></td>
+      <td><%= f.producto %></td>
+      <td><%= f.cantidad %></td>
+      <td><%= f.estado %></td>
+      <td>
+      <a href="/recepciones/recepcion/<%= f.id %>" class="btn btn-primary btn-sm">Ver Informe</a>
+      <% }) %>
+      </td>
+        </tr>
+    </tbody>
+  </table>
+
+<a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
+
+</body>
+</head>

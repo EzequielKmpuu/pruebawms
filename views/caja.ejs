@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+  <meta charset="UTF-8">
+  <title>Punto de Venta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body class="p-4">
+
+  <h3>Punto de Venta</h3>
+
+  <!-- Buscar producto -->
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <input id="codigo" class="form-control" placeholder="Código de producto" autofocus>
+      
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" onclick="buscarProducto()">Agregar</button>
+    </div>
+  </div>
+
+  <!-- Tabla de venta -->
+  <table class="table table-bordered" id="tabla-venta">
+    <thead class="table-light">
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cant.</th>
+        <th>Total</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody id="detalle-venta">
+    </tbody>
+  </table>
+
+  <h4>Total: $ <span id="total">0.00</span></h4>
+
+  <!-- Finalizar -->
+  <button class="btn btn-success" onclick="finalizarVenta()">Finalizar Venta</button><br>
+  <br>
+  <a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
+
+  <script>
+     // Escuchar cuando se presiona "Enter" en el campo de código
+        document.getElementById('codigo').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+         event.preventDefault(); // evita que se envíe un formulario o recargue la página
+        buscarProducto();       // llama a tu función de agregar
+        }
+         });
+
+    const productos = [];
+    
+    function buscarProducto() {
+
+        
+      const codigo = document.getElementById('codigo').value;
+      if (!codigo) return;
+      
+
+      fetch(`/caja/venta/${codigo}`)
+        .then(res => res.json())
+        .then(producto => {
+          const cantidad = 1;
+
+          const totalLinea = (producto.precio_venta * cantidad).toFixed(2);
+
+          productos.push({
+            codigo: producto.codigo,
+            nombre: producto.nombre,
+            cantidad: cantidad,
+            precio_unitario: producto.precio,
+            total: parseFloat(totalLinea)
+          });
+
+          renderizarTabla();
+          document.getElementById('codigo').value = '';
+        })
+        .catch(() => alert('Producto no encontrado'));
+    }
+
+    function renderizarTabla() {
+      const cuerpo = document.getElementById('detalle-venta');
+      cuerpo.innerHTML = '';
+
+      let total = 0;
+
+      productos.forEach((p, index) => {
+        total += p.total;
+
+        cuerpo.innerHTML += `
+          <tr>
+            <td>${p.nombre}</td>
+            <td>$ ${p.precio_unitario}</td>
+            <td>${p.cantidad}</td>
+            <td>$ ${p.total.toFixed(2)}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="eliminar(${index})">X</button></td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    function eliminar(i) {
+      productos.splice(i, 1);
+      renderizarTabla();
+    }
+
+    function finalizarVenta() {
+      if (productos.length === 0) return alert('No hay productos en la venta');
+
+      const metodo_pago = prompt('¿Método de pago? (efectivo / tarjeta / etc)') || 'efectivo';
+
+      fetch('/caja/finalizar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productos, metodo_pago })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Venta registrada con éxito');
+          productos.length = 0;
+          renderizarTabla();
+        } else {
+          alert('Error al finalizar la venta');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

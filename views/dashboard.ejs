@@ -1,90 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f5f5f5;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .navbar {
-            width: 100%;
-            background-color: #8400ff;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            color: white;
-        }
-
-        .navbar .logo {
-            font-weight: bold;
-            font-size: 22px;
-            color: white;
-        }
-
-        .navbar .menu a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-        }
-
-        .main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .option {
-            width: 250px;
-            padding: 30px;
-            text-align: center;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.3s;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .option:hover {
-            transform: scale(1.05);
-            background-color: #eaeaea;
-        }
-    </style>
+  <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="p-4">
+  <nav class="bg-gray-900 text-white px-8 py-6 shadow-lg">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    
+    <!-- Logo -->
+    <div class="text-2xl font-bold tracking-wide text-cyan-400 hover:text-cyan-300 transition duration-300">
+      <h2>Bienvenido, <%= user.nombre %></h2>
+    </div>
+    
+    <!-- Links -->
+    <div class="hidden md:flex space-x-6 text-lg">
+      <a href="/facturas" class="hover:text-cyan-400 transition">Ingresos</a>
+      <a href="/movimientos" class="hover:text-cyan-400 transition">Movimientos</a>
+      <a href="/productos" class="hover:text-cyan-400 transition">Productos</a>
+      <a href="/clientes" class="hover:text-cyan-400 transition">Clientes</a>
+      <a href="/caja" class="hover:text-cyan-400 transition">Caja</a>
+      
+    </div>
 
-    <div class="navbar">
-        <div class="logo">MARSALA</div>
-        <div class="menu">
-            <a href="/usuarios">Usuarios</a>
-            <a href="/products">Productos</a>
-            <a href="/clientes">Clientes</a>
+    <!-- Botón de login o acción -->
+    <div class="hidden md:block">
+      <a href="/logout" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-xl shadow-md transition">
+        Logout
+      </a>
+    </div>
+
+    <!-- Menú móvil -->
+    <div class="md:hidden">
+      <button id="menu-btn" class="focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú desplegable en móvil -->
+  <div id="mobile-menu" class="md:hidden hidden mt-4 space-y-2">
+    <a href="/facturas" class="block px-4 py-2 hover:bg-gray-800 rounded">Ingresos</a>
+    <a href="/movimientos" class="block px-4 py-2 hover:bg-gray-800 rounded">Movimientos</a>
+    <a href="/productos" class="block px-4 py-2 hover:bg-gray-800 rounded">Productos</a>
+    <a href="/clientes" class="block px-4 py-2 hover:bg-gray-800 rounded">Clientes</a>
+    <a href="/caja" class="block px-4 py-2 hover:bg-gray-800 rounded">Caja</a>
+    <a href="/logout" class="block px-4 py-2 bg-cyan-600 rounded text-center hover:bg-cyan-700 transition">Logout</a>
+  </div>
+</nav>
+
+  
+<div class="row my-4">
+    <div class="col-md-3">
+      <div class="card text-bg-primary">
+        <div class="card-body">
+          <h5>Total de Productos</h5>
+          <p><%= totalProductos %></p>
         </div>
+      </div>
     </div>
-
-    <div class="main">
-        <div class="option" onclick="location.href='/admin'">Administración</div>
-        <div class="option" onclick="location.href='/operaciones'">Operaciones</div>
+    <div class="col-md-3">
+      <div class="card text-bg-success">
+        <div class="card-body">
+          <h5>Total Unidades en Stock</h5>
+          <p><%= totalUnidades %></p>
+        </div>
+      </div>
     </div>
+  </div>
 
+  <div><h4>Productos con Bajo Stock y Stock Negativo</h4></div>
+  <div><h4 class="text-danger">Productos con stock negativo se aconseja ajustar cuanto antes</div></h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>Producto</th><th>Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% productosBajoStock.forEach(p => { %>
+        <tr>
+          <td><%= p.nombre %></td>
+          <td><%= p.stock %></td>
+          
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h4>Últimos 5 Movimientos</h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Usuario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% ultimosMovimientos.forEach(m => { %>
+        <tr>
+          <td><%= m.fecha %></td>
+          <td><%= m.producto_nombre %></td>
+          <td><%= m.tipo %></td>
+          <td><%= m.cantidad %></td>
+          <td><%= m.usuario %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  
+  
+  <script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Clientes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body class="p-4">
+  <h3>ABM - Clientes</h3>
+
+  <form action="/clientes/registrar" method="POST" >
+    <div class=row>
+    <div class="col-md-4">
+      <input name="razonSocial" placeholder="Razon Social" class="form-control w-50" required maxlength="20">
+    </div>
+    <div class="col-md-4">
+      <input name="nombre" placeholder="Nombre" class="form-control w-50" required maxlength="30">
+    </div>
+    <div class="col-md-4">
+      <input name="domicilio" placeholder="Domicilio" class="form-control w-50" required maxlength="30">
+    </div>
+    <div class="col-md-4">
+      <input name="codPostal" placeholder="Codigo Postal" class="form-control w-50" required maxlength="8">
+    </div>
+    <div class="col-md-4">
+      <input name="contacto" placeholder="Numero de telefono" class="form-control w-50" required maxlength="10">
+    </div>
+    <div class="col-md-4">
+      <input name="dni" placeholder="DNI" class="form-control w-50" required maxlength="8">
+    </div>
+    <div class="col-md-4">
+      <input name="cuit" placeholder="CUIT" class="form-control w-50" required maxlength="13">
+    </div>
+    <div class="col-md-4">
+      <input name="provincia" placeholder="Provincia" class="form-control w-50" required maxlength="20">
+    </div>
+    <div class="col-md-4">
+      <input name="localidad" placeholder="Localidad" class="form-control w-50" required maxlength="20">
+    </div>
+    <div class="col-md-4">
+      <select name="lista" class="form-control w-50" required>
+        <option value="clasica">Clasica</option>
+        <option value="medium">Medium</option>
+        <option value="premium">Premium</option>
+        <option value="vip">Vip</option>
+        <option value="empleado">Empleado</option>
+      </select>
+    </div>
+    </div>
+
+    <div class="col-md-2"><br>
+      <button type="submit" class="btn btn-success w-100">Agregar</button>
+    </div><br>
+  </form>
+
+  <table class="table table-bordered table-sm">
+    <thead class="table-bordered">
+      <tr>
+        <th>ID</th><th>Razon Social</th><th>Nombre</th><th>Domicilio</th><th>C.P.</th><th>Telefono</th><th>DNI</th><th>C.U.I.T.</th><th>Provincia</th><th>Localidad</th><th>Lista</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% clientes.forEach(c => { %>
+        <tr>
+          <form action="/clientes/editar/<%= c.id %>" method="POST">
+            <td><%= c.id %></td>
+            <td><input name="razonSocial" value="<%= c.razonSocial.toUpperCase()%>" class="form-control form-control-sm"></td>    
+            <td><input name="nombre" value="<%= c.nombre.toUpperCase()%>" class="form-control form-control-sm"></td>    
+            <td><input name="domicilio" value="<%= c.domicilio.toUpperCase()%>" class="form-control form-control-sm"></td>   
+            <td><input name="codPostal" value="<%= c.codPostal %>" class="form-control form-control-sm"></td>      
+            <td><input name="contacto" value="<%= c.contacto %>" class="form-control form-control-sm"></td>
+            <td><input name="dni" value="<%= c.dni %>" class="form-control form-control-sm" readonly></td>
+            <td><input name="cuit" value="<%= c.cuit %>" class="form-control form" readonly></td>
+            <td><input name="provincia" value="<%= c.provincia.toUpperCase()%>" class="form-control form"></td>
+            <td><input name="localidad" value="<%= c.localidad.toUpperCase()%>" class="form-control form"></td>
+            <td><input name="lista" value="<%= c.lista.toUpperCase()%>" class="form-control form" readonly></td>
+
+            <td class="d-flex gap-1">
+              <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+              <a href="/clientes/eliminar/<%= c.id %>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+            </td>
+          </form>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
+</body>
+</html>

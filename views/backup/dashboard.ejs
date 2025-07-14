@@ -1,0 +1,140 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WMS</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    
+  <!-- Aca va tu navbar copada -->
+   
+
+<nav class="bg-gray-900 text-white px-6 py-4 shadow-lg">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    
+    <!-- Logo -->
+    <div class="text-2xl font-bold tracking-wide text-cyan-400 hover:text-cyan-300 transition duration-300">
+      <h2>Bienvenido, <%= user.nombre %></h2>
+    </div>
+    
+    <!-- Links -->
+    <div class="hidden md:flex space-x-6 text-lg">
+      <a href="/movimientos" class="hover:text-cyan-400 transition">Movimientos</a>
+      <a href="/productos" class="hover:text-cyan-400 transition">Productos</a>
+      <a href="/productos/escanear" class="hover:text-cyan-400 transition">Escanear un producto</a>
+      
+    </div>
+
+    <!-- Botón de login o acción -->
+    <div class="hidden md:block">
+      <a href="/logout" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-xl shadow-md transition">
+        Logout
+      </a>
+    </div>
+
+    <!-- Menú móvil -->
+    <div class="md:hidden">
+      <button id="menu-btn" class="focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú desplegable en móvil -->
+  <div id="mobile-menu" class="md:hidden hidden mt-4 space-y-2">
+    <a href="/movimientos" class="block px-4 py-2 hover:bg-gray-800 rounded">Movimientos</a>
+    <a href="/productos" class="block px-4 py-2 hover:bg-gray-800 rounded">Productos</a>
+    <a href="/productos/escanear" class="block px-4 py-2 hover:bg-gray-800 rounded">Escanear</a>
+    <a href="/logout" class="block px-4 py-2 bg-cyan-600 rounded text-center hover:bg-cyan-700 transition">Logout</a>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
+
+<div class="row my-4">
+    <div class="col-md-3">
+      <div class="card text-bg-primary">
+        <div class="card-body">
+          <h5>Total de Productos</h5>
+          <p><%= totalProductos %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-bg-success">
+        <div class="card-body">
+          <h5>Total Unidades en Stock</h5>
+          <p><%= totalUnidades %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div><h4>Productos con Bajo Stock y Stock Negativo</h4></div>
+  <div><h4 class="text-danger">Productos con stock negativo se aconseja ajustar cuanto antes</div></h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>Producto</th><th>Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% productosBajoStock.forEach(p => { %>
+        <tr>
+          <td><%= p.nombre %></td>
+          <td><%= p.stock %></td>
+          
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h4>Últimos 5 Movimientos</h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Usuario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% ultimosMovimientos.forEach(m => { %>
+        <tr>
+          <td><%= m.usuario %></td>
+          <td><%= m.producto_nombre %></td>
+          <td><%= m.tipo %></td>
+          <td><%= m.cantidad %></td>
+          <td><%= m.fecha %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+<div>
+  <a href="/productos/escanear" class="btn btn-info mt-3">Escanear producto</a>
+</div>
+<div>
+  <a href="/productos" class="btn btn-primary mt-3">Productos</a>
+</div>
+<div>
+  <a href="/movimientos" class="btn btn-success mt-3">Movimientos</a>
+</div>
+<div>
+  <a href="/logout" class="btn btn-danger mt-3">Cerrar sesión</a>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body class="p-4">
+  
+  <h3>ABM - Gestión de Productos</h3>
+  <div class='row'><br>
+    <div class="col-md-9">
+    <a href="/proveedores" class="btn btn-danger col-md-2">ABM - Proveedores</a>
+    <a href="/ubicaciones" class="btn btn-primary col-md-2">ABM - Ubicaciones</a>
+    <a href="/reubicar" class="btn btn-warning col-md-2">Reubicar Productos</a>
+    </div>
+  </div><br>
+
+
+  <form action="/productos/agregar" method="POST" >
+    <div class=row>
+    <div class="col-md-4">
+      <select name="proveedor" class="form-select w-50" required>
+        <option value="">-- Seleccione un producto --</option>
+      <% dvprov.forEach(rp => { %>
+      <option value="<%= rp.seller %>"><%= rp.seller.toUpperCase() %></option>
+      <% }) %>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <input name="nombre" placeholder="Descripcion del producto" class="form-control w-50" required maxlength="30">
+    </div>
+    <div class="col-md-4">
+      <input name="corta" placeholder="Descripcion Corta" class="form-control w-50" required maxlength="10">
+    </div>
+    <div class="col-md-4">
+      <input name="codigo" placeholder="Codigo de Barras" class="form-control w-50" required maxlength="13">
+    </div>
+    <div class="col-md-4">
+      <input name="categoria" placeholder="Categoria" class="form-control w-50" required maxlength="20">
+    </div>
+    <div class="col-md-4">
+      <input name="sub_categoria" placeholder="Sub Categoria" class="form-control w-50" required maxlength="20">
+    </div>
+    </div>
+    <div class="col-md-2"><br>
+      <button type="submit" class="btn btn-success w-100">Agregar</button>
+    </div><br>
+  </form>
+
+    <a href="/productos/importar" class="btn btn-secondary mt-3">Importar desde EXCEL</a><br>
+    <br>
+    <h5 class="text-danger">(*) Se Pueden Modificar</h3>
+
+    <form class="row mb-3" action="/productos/buscarlo" method="GET">
+    <div class="col-md-4">
+    <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre..." value="<%= typeof nombre !== 'undefined' ? nombre : '' %>">
+    </div>
+    <div class="col-md-4">
+    <input type="text" name="codigo" class="form-control" placeholder="Buscar por código de barras..." value="<%= typeof codigo !== 'undefined' ? codigo : '' %>">
+    </div>
+    <div class="col-md-4">
+    <input type="text" name="categoria" class="form-control" placeholder="Buscar por Categoria..." value="<%= typeof categoria !== 'undefined' ? categoria : '' %>">
+    </div>
+    <div class="col-md-4">
+    <input type="text" name="sub_categoria" class="form-control" placeholder="Buscar por Sub Categoria..." value="<%= typeof sub_categoria !== 'undefined' ? sub_categoria : '' %>">
+    </div>
+    <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Buscar</button>
+    </div>
+    <div class="col-md-2">
+    <a href="/productos/buscarlo" class="btn btn-secondary w-100">Limpiar</a>
+    </div>
+    </form>
+
+  <table class="table table-bordered table-sm">
+    <thead class="table-bordered">
+      <tr>
+        <th>ID</th><th>Proveedor</th><th>Nombre</th><th>Corta (*)</th><th>Codigo de Barras</th><th>Categoria (*)</th><th>Sub Categoria (*)</th><th>Stock</th><th>Precio Lista</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+  <% productos.forEach(p => { %>
+    <form action="/productos/editar/<%= p.id %>" method="POST">
+      <tr>
+        <td><%= p.id %></td>
+        <td><input name="proveedor" value="<%= p.proveedor.toUpperCase() %>" class="form-control form-control-sm" readonly></td>    
+        <td><input name="nombre" value="<%= p.nombre.toUpperCase() %>" class="form-control form-control-sm" readonly></td>    
+        <td><input name="corta" value="<%= p.corta.toUpperCase() %>" class="form-control form-control-sm" ></td>   
+        <td><input name="codigo" value="<%= p.codigo %>" class="form-control form-control-sm" readonly></td>      
+        <td><input name="categoria" value="<%= p.categoria.toUpperCase() %>" class="form-control form-control-sm" ></td>
+        <td><input name="sub_categoria" value="<%= p.sub_categoria.toUpperCase() %>" class="form-control form-control-sm" ></td>
+        <td><input name="stock" type="number" value="<%= p.stock %>" class="form-control form-control-sm" readonly></td>
+        <td><input name="precio" type="number" value="<%= p.precio %>" class="form-control form-control-sm" readonly></td>
+        <td class="d-flex gap-1">
+          <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+          <a href="/productos/eliminar/<%= p.id %>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+        </td>
+      </tr>
+    </form>
+  <% }) %>
+</tbody>
+
+  </table>
+
+  <a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
+</body>
+</html>
