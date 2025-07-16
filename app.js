@@ -36,7 +36,7 @@ app.use('/movimientos', require('./routes/movimientos'));
 app.use('/facturas', require('./routes/facturas'));
 app.use('/proveedores', require('./routes/proveedores'));
 app.use('/recepciones', require('./routes/recepciones'));
-//app.use('/recepcionesOK', require('./routes/recepcionesOK'));
+app.use('/recepcionesOK', require('./routes/recepcionesOK'));
 app.use('/clientes', require('./routes/clientes'));
 app.use('/caja', require('./routes/caja'));
 app.use('/importar', require('./routes/productos'));

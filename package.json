@@ -11,12 +11,14 @@
     "express-session": "^1.18.1",
     "multer": "^2.0.1",
     "muter": "^0.7.0",
+    "nodemon": "^3.1.10",
     "sqlite3": "^5.1.7",
     "tailwindcss": "^4.1.10",
     "xlsx": "^0.18.5"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+     "dev": "nodemon app.js",
+     "fechas": "node app.js"
   }
 }
-

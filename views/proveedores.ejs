@@ -8,8 +8,7 @@
 </head>
 <body class="p-4">
   
-  <h3>ABM - Gestión de Proveedores</h3>
-
+  <h2 class="text-center text-bg-primary p-3 rounded">Gestión de Proveedores</h2>
 
   <form action="/proveedores/agregar" method="POST" class="row g-3 my-3">
     <div class="col-md-2">
@@ -32,10 +31,8 @@
           <form action="/proveedores/editar/<%= p.id %>" method="POST">
             <td><%= p.id %></td>
             <td><input name="seller" value="<%= p.seller.toUpperCase() %>" class="form-control form-control-sm" ></td>
-            
             <td class="d-flex gap-1" style="width: 300px;">
               <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-              <a href="/proveedores/eliminar/<%= p.id %>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar Proveedor?')">Eliminar</a>
             </td>
           </form>
         </tr>
@@ -43,7 +40,6 @@
     </tbody>
   </table>
 
-  <a href="/productos" class="btn btn-secondary mt-3">Productos</a>
   <a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
 </body>
 </html>

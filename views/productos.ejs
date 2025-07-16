@@ -7,22 +7,16 @@
   <link rel="stylesheet" href="/estilos.css">
 </head>
 <body class="p-4">
-  
-  <h3>ABM - Gestión de Productos</h3>
+  <h2 class="text-center text-bg-primary p-3 rounded">Gestión de Productos</h2>
   <div class='row'><br>
     <div class="col-md-9">
-    <a href="/proveedores" class="btn btn-danger col-md-2">ABM - Proveedores</a>
-    <a href="/ubicaciones" class="btn btn-primary col-md-2">ABM - Ubicaciones</a>
-    <a href="/reubicar" class="btn btn-warning col-md-2">Reubicar Productos</a>
+  
     </div>
-  </div><br>
-
-
+  </div>
   <form action="/productos/agregar" method="POST" >
-    <div class=row>
     <div class="col-md-4">
       <select name="proveedor" class="form-select w-50" required>
-        <option value="">-- Seleccione un producto --</option>
+        <option value="">-- Seleccione un Proveedor --</option>
       <% dvprov.forEach(rp => { %>
       <option value="<%= rp.seller %>"><%= rp.seller.toUpperCase() %></option>
       <% }) %>
@@ -46,13 +40,11 @@
     </div>
     <div class="col-md-2"><br>
       <button type="submit" class="btn btn-success w-100">Agregar</button>
-    </div><br>
+    </div>
   </form>
 
-    <a href="/productos/importar" class="btn btn-secondary mt-3">Importar desde EXCEL</a><br>
+    <a href="/productos/importar" class="btn btn-secondary mt-3">Importar lista de productos desde un EXCEL</a><br>
     <br>
-    <h5 class="text-danger">(*) Se Pueden Modificar</h3>
-
     <form class="row mb-3" action="/productos/buscarlo" method="GET">
     <div class="col-md-4">
     <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre..." value="<%= typeof nombre !== 'undefined' ? nombre : '' %>">
@@ -73,11 +65,12 @@
     <a href="/productos/buscarlo" class="btn btn-secondary w-100">Limpiar</a>
     </div>
     </form>
-
+    <h5 class="text-white text-bg-danger text-center">(*) Se Pueden Modificar</h5>
+    <h5 class="text-white text-bg-success text-center">Stock y Precios - Semodifican con los ingresos</h5>
   <table class="table table-bordered table-sm">
     <thead class="table-bordered">
       <tr>
-        <th>ID</th><th>Proveedor</th><th>Nombre</th><th>Corta (*)</th><th>Codigo de Barras</th><th>Categoria (*)</th><th>Sub Categoria (*)</th><th>Stock</th><th>Precio Lista</th><th>Acciones</th>
+        <th>ID</th><th>Proveedor</th><th>Nombre</th><th>Corta <span class="text-danger">(*)</span></th><th>Codigo de Barras</th><th>Categoria <span class="text-danger">(*)</span></th><th>Sub Categoria <span class="text-danger">(*)</span></th><th>Stock</th><th>Precio Lista</th><th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -95,7 +88,8 @@
         <td><input name="precio" type="number" value="<%= p.precio %>" class="form-control form-control-sm" readonly></td>
         <td class="d-flex gap-1">
           <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-          <a href="/productos/eliminar/<%= p.id %>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+          <!--<a href="/productos/eliminar/<%= p.id %>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+        -->
         </td>
       </tr>
     </form>

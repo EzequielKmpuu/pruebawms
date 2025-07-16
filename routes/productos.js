@@ -63,7 +63,7 @@ router.post('/editar/:id', auth, (req, res) => {
   const { id } = req.params;
   const { proveedor, nombre, corta, categoria, sub_categoria, codigo, stock, precio } = req.body;
 
-  console.log(req.body);
+  //console.log(req.body);
 
   Producto.actualizar(id, proveedor, nombre, corta, codigo, categoria, sub_categoria, stock, precio, (err) => {
     if (err) return res.send('Error al actualizar');
@@ -90,7 +90,7 @@ router.get('/importar', auth, (req, res) => {
 router.get('/buscarlo', (req, res) => {
   const { nombre, codigo, categoria, sub_categoria } = req.query;
 
-  console.log(req.query)
+  //console.log(req.query)
 
   rutaprov.obtenerTodosProveedores((err, dvprov) => {
     if (err) return res.send('Error al obtener proveedores');
@@ -182,7 +182,7 @@ router.post('/importar', upload.single('archivoExcel'), (req, res) => {
   stmt.finalize();
   fs.unlinkSync(archivo); // eliminar archivo temporal
 
-  console.log('Productos importados:', productos.length);
+  //console.log('Productos importados:', productos.length);
   res.redirect('/productos'); // redirige correctamente
 });
 

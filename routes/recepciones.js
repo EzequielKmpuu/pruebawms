@@ -33,7 +33,7 @@ router.get('/', auth, (req, res) => {
 
   router.get('/recepcion/:id', auth, (req, res) => {
   const idFactura = parseInt(req.params.id, 10);
-  console.log(idFactura);
+  //console.log(idFactura);
 
 
   Factura.obtenerCabeceraPorId(idFactura, (err, factura) => {
@@ -55,10 +55,6 @@ router.post('/validar', auth, (req, res) => {
   const productos = req.body.productos; // [{ codigo, cantidad }]
   const idRecepcion = req.body.recepcion;
   const estadoNuevo = 'Validada';
-
-  console.log(productos);
-  console.log(idRecepcion);
-  console.log(estadoNuevo);
 
   const sql = `UPDATE productos SET stock = stock + ? WHERE codigo = ?`;
   const stmt = db.prepare(sql);
@@ -99,7 +95,7 @@ router.post('/validar', auth, (req, res) => {
               return res.status(500).json({ error: 'Error al actualizar factura' });
             }
 
-            console.log(`Factura con recepción ${idRecepcion} actualizada a '${estadoNuevo}'`);
+           // console.log(`Factura con recepción ${idRecepcion} actualizada a '${estadoNuevo}'`);
             res.json({ success: true });
           }
         );
@@ -114,7 +110,7 @@ router.get('/buscar/:codigo', auth, (req, res) => {
 
 
   Producto.buscarPorCodigo(codigo, (err, producto) => {
-      console.log(producto);
+      //console.log(producto);
     if (err) return res.status(500).json({ error: 'Error de servidor' }); 
     if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
 

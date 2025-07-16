@@ -21,7 +21,7 @@ router.get('/', auth, (req, res) => {
 router.post('/agregar', auth, (req, res) => {
   const { ubicacion, tipo } = req.body;
 
-  console.log('Ubicacion agregada =', req.body);
+  //console.log('Ubicacion agregada =', req.body);
 
   Ubicacion.agregarUbicacion(ubicacion, tipo, (err) => {
         

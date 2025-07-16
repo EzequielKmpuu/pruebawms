@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/estilos.css">
 </head>
 <body class="p-4">
-  <h3>Registrar un Movimiento de Stock</h3>
+  <h2 class="text-center text-bg-success">Registrar un Movimiento de Stock</h2><br>
 
   <form action="/movimientos/registrar" method="POST" >
     <div class="col-md-2">
@@ -15,26 +15,26 @@
         <option value="ingreso">Ingreso</option>
         <option value="egreso">Egreso</option>
       </select>
-    </div><br>
+    </div>
     <div class="col-md-3">
       <select name="producto_id" class="form-select" required>
         <% productos.forEach(p => { %>
           <option value="<%= p.id %>"><%= p.nombre.toUpperCase() %> (<%= p.codigo %>)</option>
         <% }) %>
       </select>
-    </div><br>
+    </div>
     <div class="col-md-2">
       <input type="number" name="cantidad" placeholder="Cantidad" class="form-control" required maxlength="5">
-    </div><br>
+    </div>
     <div class="col-md-3">
       <input name="observacion" placeholder="Observación" class="form-control" required maxlength="30">
-    </div><br>
-    <div class="col-md-1">
+    </div>
+    <div class="col-md-1"><br>
       <button type="submit" class="btn btn-success w-100">Registrar</button>
-    </div><br>
+    </div>
   </form>
 
-  <h4>Historial de Movimientos</h4>
+  <h3 class="text-center text-xl">Historial de Movimientos</h3>
   <table class="table table-bordered table-sm">
     <thead class="table-light">
       <tr>

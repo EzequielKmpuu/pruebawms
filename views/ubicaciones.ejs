@@ -8,7 +8,7 @@
 </head>
 <body class="p-4">
   
-  <h3>Alta de Ubicaciones</h3>
+  <h2 class="text-center text-bg-primary p-3 rounded">Gestion de Ubicaciones</h2>
 
 
   <form action="/ubicaciones/agregar" method="POST" class="row g-3 my-3">
@@ -21,8 +21,8 @@
         <option value="Zona Temporal">Zona Temporal</option>
       </select>
     </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-success w-100">Agregar</button>
+    <div>
+      <button type="submit" class="btn btn-success" style="width: 300px;">Agregar</button>
     </div>
   </form>
 
@@ -50,8 +50,6 @@
       <% }) %>
     </tbody>
   </table>
-
-  <a href="/productos" class="btn btn-secondary mt-3">Productos</a>
   <a href="/dashboard" class="btn btn-secondary mt-3">Volver al dashboard</a>
 </body>
 </html>

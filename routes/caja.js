@@ -70,7 +70,7 @@ router.get('/venta/:codigo', (req, res) => {
     if (err || !producto) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
-  console.log(producto);
+  //console.log(producto);
     // Si querés actualizar stock, podrías hacerlo aparte o aquí mismo si realmente hace falta.
     // Pero no uses `res.redirect()` si vas a responder al frontend con `fetch`.
 

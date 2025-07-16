@@ -28,7 +28,7 @@ router.get('/', auth, (req, res) => {
 router.get('/buscar/:codigo', (req, res) => {
   const codigo = req.params.codigo;
 
-  console.log('Código recibido:', codigo);
+  //console.log('Código recibido:', codigo);
 
   db.get('SELECT id, nombre, ubicacion FROM productos WHERE codigo = ?', [codigo], (err, row) => {
     if (err) return res.status(500).json({ error: 'Error en la búsqueda' });
@@ -38,7 +38,7 @@ router.get('/buscar/:codigo', (req, res) => {
     console.warn('Producto no encontrado en DB'); 
     
     res.json(row);
-    console.log('Producto encontrado:', row); 
+    //console.log('Producto encontrado:', row); 
   });
 });
 
