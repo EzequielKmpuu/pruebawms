@@ -9,8 +9,5 @@ db.run(`INSERT INTO usuarios (nombre, usuario, email, password, rol, activa) VAL
     db.close();
 });
 
-
-
-
 //const movimientos1 = await db.all('SELECT * FROM movimientos');
 //console.log(movimientos1);
